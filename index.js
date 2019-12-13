@@ -74,6 +74,7 @@ export default class SideMenu extends React.Component<Props, State> {
   responder: PanResponderInstance;
   prevLeft: number;
   isOpen: boolean;
+  isAnimating: boolean;
   sideMenu: React.Node;
 
   static defaultProps = {
@@ -112,6 +113,7 @@ export default class SideMenu extends React.Component<Props, State> {
 
     this.prevLeft = 0;
     this.isOpen = !!props.isOpen;
+    this.isAnimating = false;
 
     const openOffsetMenuPercentage = props.openMenuOffset / deviceScreen.width;
     const hiddenMenuOffsetPercentage =
@@ -162,6 +164,7 @@ export default class SideMenu extends React.Component<Props, State> {
     if (
       typeof props.isOpen !== "undefined" &&
       this.isOpen !== props.isOpen &&
+      !this.isAnimating &&
       (props.autoClosing || this.isOpen === false)
     ) {
       this.openMenu(props.isOpen);
@@ -209,6 +212,7 @@ export default class SideMenu extends React.Component<Props, State> {
   moveLeft(offset: number) {
     const newOffset = this.menuPositionMultiplier() * offset;
 
+    this.isAnimating = true;
     this.props
       .animationFunction(this.props.leftAnimatedValue, newOffset)
       .start(this.handleAnimationComplete);
@@ -221,6 +225,8 @@ export default class SideMenu extends React.Component<Props, State> {
   }
 
   handleAnimationComplete = () => {
+    this.isAnimating = false;
+
     if (this.props.onAnimationComplete) {
       this.props.onAnimationComplete(this.isOpen);
     }
