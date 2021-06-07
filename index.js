@@ -188,7 +188,11 @@ export default class SideMenu extends React.Component<Props, State> {
 
     if (this.isOpen) {
       overlay = (
-        <TouchableWithoutFeedback onPress={() => this.openMenu(false)}>
+        <TouchableWithoutFeedback
+          accessible={false}
+          importantForAccessibility="no-hide-descendants"
+          onPress={() => this.openMenu(false)}
+        >
           <View style={styles.overlay} />
         </TouchableWithoutFeedback>
       );
