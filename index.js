@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import PropTypes from "prop-types";
+import styles from "./styles";
 
 import type { PanResponderInstance } from "PanResponder";
 
@@ -149,7 +150,7 @@ export default class SideMenu extends React.Component<Props, State> {
     });
   }
 
-  componentWillMount(): void {
+  UNSAFE_componentWillMount(): void {
     this.responder = PanResponder.create({
       onStartShouldSetPanResponderCapture: this
         .onStartShouldSetResponderCapture,
@@ -160,7 +161,7 @@ export default class SideMenu extends React.Component<Props, State> {
     });
   }
 
-  componentWillReceiveProps(props: Props): void {
+  UNSAFE_componentWillReceiveProps(props: Props): void {
     if (
       typeof props.isOpen !== "undefined" &&
       this.isOpen !== props.isOpen &&
@@ -342,30 +343,32 @@ SideMenu.propTypes = {
   autoClosing: PropTypes.bool
 };
 
-const absoluteStretch = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0
+SideMenu.defaultProps = {
+  toleranceY: 10,
+  toleranceX: 10,
+  edgeHitWidth: 60,
+  children: null,
+  menu: null,
+  openMenuOffset: deviceScreen.width * (2 / 3),
+  disableGestures: false,
+  menuPosition: 'left',
+  hiddenMenuOffset: 0,
+  onMove: () => {},
+  onStartShouldSetResponderCapture: () => true,
+  onChange: () => {},
+  onSliding: () => {},
+  animationStyle: value => ({
+    transform: [{
+      translateX: value,
+    }],
+  }),
+  animationFunction: (prop, value) => Animated.spring(prop, {
+    toValue: value,
+    friction: 8,
+    useNativeDriver: true,
+  }),
+  onAnimationComplete: () => {},
+  isOpen: false,
+  bounceBackOnOverdraw: true,
+  autoClosing: true,
 };
-
-const styles = StyleSheet.create({
-  container: {
-    ...absoluteStretch,
-    justifyContent: "center"
-  },
-  menu: {
-    ...absoluteStretch
-  },
-  frontView: {
-    flex: 1,
-    position: "absolute",
-    left: 0,
-    top: 0,
-    overflow: "hidden"
-  },
-  overlay: {
-    ...absoluteStretch
-  }
-});
