@@ -358,7 +358,7 @@ SideMenu.defaultProps = {
   menuPosition: 'left',
   hiddenMenuOffset: 0,
   onMove: () => {},
-  onStartShouldSetResponderCapture: () => true,
+  onStartShouldSetResponderCapture: () => false,
   onChange: () => {},
   onSliding: () => {},
   animationStyle: value => ({
