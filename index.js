@@ -41,12 +41,12 @@ type Props = {|
 |};
 
 type Event = {|
-  nativeEvent: {
-    layout: {
+  nativeEvent: {|
+    layout: {|
       width: number,
       height: number
-    }
-  }
+    |}
+  |}
 |};
 
 type State = {|
@@ -102,6 +102,7 @@ export default class SideMenu extends React.Component<Props, State> {
     animationFunction: (prop: Animated.Value, value: number) =>
       Animated.spring(prop, {
         toValue: value,
+        useNativeDriver: false,
         friction: 8
       }),
     isOpen: false,
@@ -191,15 +192,14 @@ export default class SideMenu extends React.Component<Props, State> {
         <TouchableWithoutFeedback
           accessible={false}
           importantForAccessibility="no-hide-descendants"
-          onPress={() => this.openMenu(false)}
-        >
+          onPress={() => this.openMenu(false)}>
           <View style={styles.overlay} />
         </TouchableWithoutFeedback>
       );
     }
 
     const { width, height } = this.state;
-    const ref = sideMenu => (this.sideMenu = sideMenu);
+    const ref = sideMenu => (this.sideMenu = (sideMenu: any));
     const style = [
       styles.frontView,
       { width, height },
