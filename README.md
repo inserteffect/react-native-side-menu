@@ -1,7 +1,9 @@
 ## Customizable side menu for react-native
-<p align="center">
-  <img src ="http://oi61.tinypic.com/2n9l2dz.jpg" />
-</p>
+
+| iOS | android |
+| --- | --- |
+| <img src="https://user-images.githubusercontent.com/6936373/71641602-eb969700-2ce1-11ea-9698-c251ccd19b65.png" width="320" />  | <img src="https://user-images.githubusercontent.com/6936373/71641601-eb969700-2ce1-11ea-82e3-c09a63145989.png" width="320" />  |
+
 
 ### Content
 - [Installation](#installation)
@@ -16,7 +18,7 @@ npm install react-native-side-menu --save
 
 ### Usage example
 ```javascript
-const SideMenu = require('react-native-side-menu');
+import SideMenu from 'react-native-side-menu'
 
 class ContentView extends React.Component {
   render() {
@@ -79,5 +81,18 @@ class Application extends React.Component {
 
 On iPhone, the scroll-to-top gesture has no effect if there is more than one scroll view on-screen that has scrollsToTop set to true. Since it defaults to `true` in ReactNative, you have to set `scrollsToTop={false}` on your ScrollView inside `Menu` component in order to get it working as desired.
 
+#### The swipe animation is extremely slow
+
+Try disabling remote JS debugging (from developer menu on phone/VD)
+
+#### My SideMenu contents are visible even when the side menu is hidden
+
+Ensure that your main view has a background color applied
+
+```
+<Sidemenu menu={menu}>
+<App style={{backgroundColor='white'}} />
+</SideMenu>
+```
 ### Questions?
 Feel free to contact me in [twitter](https://twitter.com/kureevalexey) or [create an issue](https://github.com/Kureev/react-native-side-menu/issues/new)
